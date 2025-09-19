@@ -1,0 +1,33 @@
+# HD3C Configuration for PhysioNet 2016 Heart Sound Classification Task
+
+# Dimensionality of the hypervectors used in HD3C (D).
+# Higher D brings robustness and stability while increases computational overhead.
+dim: 10000
+
+# Value range for input features. 
+# data/{task_name}/read_data.py should normalize all feature values into this range.
+value_range: [0.0, 1.0]
+
+# Number of output classes (J). 
+# PhysioNet 2016 is a binary classification task.
+num_classes: 2
+
+# Number of quantization levels per feature (M).
+# Each discrete level will correspond to a Level-HV.
+num_levels: 200
+
+# Dimensionality of input feature vectors (d). 
+# A total of 720 MFCC + DWT features are extracted for each heart sound.
+num_features: 720
+
+# Number of clusters per class (K). 
+# Each class is represented by K hyperspace prototypes (Cluster-HVs).
+num_clusters_per_class: 25
+
+# Number of iterations for hyperspace clustering (T).
+# A higher K typically requires higher T to converge.
+num_clustering_iters: 25
+
+# Number of retraining epochs (τ). 
+# Cluster-HVs are fine-tuned for τ epochs to correct misclassifications.
+num_retrain_epochs: 1
