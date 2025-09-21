@@ -1,6 +1,6 @@
-# HD3C Configuration for Wisconsin Breast Cancer Dataset
+# HDC-X Configuration for Wisconsin Breast Cancer Dataset
 
-# Dimensionality of the hypervectors used in HD3C (D).
+# Dimensionality of the hypervectors used in HDC-X (D).
 # Higher D brings robustness and stability while increases computational overhead.
 dim: 1000
 

@@ -2,7 +2,7 @@ import numpy as np
 from tqdm import tqdm
 
 # This python file implements:
-# Hyperdimensional Computing with In-Class Clustering (HD3C) core functions.
+# Hyperdimensional Computing - Next Generation (HDC-X) core functions.
 
 def setup(cfg_):
     """
@@ -88,7 +88,7 @@ def id_hv_dict():
     Generate the identity hypervector dictionary (ID-HV Dictionary).
 
     Each identity hypervector is randomly generated and uniquely assigned to
-    a feature index. Each ID-HV labels one feature in the HD3C framework.
+    a feature index. Each ID-HV labels one feature in the HDC-X framework.
 
     Returns
     - np.ndarray: A 2D array of shape (num_features, dim). Each ID-HV is a row 

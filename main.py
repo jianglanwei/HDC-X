@@ -1,4 +1,4 @@
-import hd3c_core as hd3c
+import hdcx_core as hdcx
 import argparse
 from types import SimpleNamespace
 import os
@@ -19,8 +19,8 @@ with open(cfg_path) as f:
 cfg = SimpleNamespace(**cfg)
 
 
-# Initialize HD3C module with config
-hd3c.setup(cfg)
+# Initialize hdc-x module with config
+hdcx.setup(cfg)
 
 
 # Load dataset using reader module
@@ -41,35 +41,35 @@ assert train_labels.max() == cfg.num_classes - 1, (
 
 # Encode training data into Sample-HVs
 print("Encoding training Sample-HVs...")
-train_sample_hvs = hd3c.encode_sample_hvs(train_features)
+train_sample_hvs = hdcx.encode_sample_hvs(train_features)
 print("\t- Training Sample-HVs encoded.\n")
 
 
 # Generate clusters from training Sample-HVs and labels
 print("Clustering training samples...")
-clusters, train_cluster_labels = hd3c.generate_clusters(train_sample_hvs, train_labels)
+clusters, train_cluster_labels = hdcx.generate_clusters(train_sample_hvs, train_labels)
 print("\t- Clustering complete.\n")
 print("Initial training complete.\n")
 
 
 # Encode test data into Sample-HVs
 print("Encoding test Sample-HVs...")
-test_sample_hvs = hd3c.encode_sample_hvs(test_features)
+test_sample_hvs = hdcx.encode_sample_hvs(test_features)
 print("\tTest Sample-HVs encoded.\n")
 
 
 # Evaluate classification accuracy on train and test sets
 print("Evaluating classification accuracy...")
-train_accuracy = hd3c.accuracy(train_sample_hvs, train_labels, clusters)
-test_accuracy = hd3c.accuracy(test_sample_hvs, test_labels, clusters)
+train_accuracy = hdcx.accuracy(train_sample_hvs, train_labels, clusters)
+test_accuracy = hdcx.accuracy(test_sample_hvs, test_labels, clusters)
 print(f"\tAccuracy: {train_accuracy * 100:.2f}% (train), {test_accuracy * 100:.2f}% (test)\n")
 
 
 # Retrain Cluster-HVs with misclassified samples for specified epochs
 for epoch in range(cfg.num_retrain_epochs):
     print(f"Epoch {epoch}: Retraining cluster representations...")
-    train_accuracy = hd3c.retrain_clusters(train_sample_hvs, train_cluster_labels, clusters)
-    test_accuracy = hd3c.accuracy(test_sample_hvs, test_labels, clusters)
+    train_accuracy = hdcx.retrain_clusters(train_sample_hvs, train_cluster_labels, clusters)
+    test_accuracy = hdcx.accuracy(test_sample_hvs, test_labels, clusters)
     print(f"\tAccuracy: {train_accuracy * 100:.2f}% (train), {test_accuracy * 100:.2f}% (test)\n")
 
 print(f"Retraining complete.")

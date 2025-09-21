@@ -1,4 +1,4 @@
-# HD3C: Hyperdimensional Computing with Class-Wise Clustering
+# HDC-X: Hyperdimensional Computing: Next Generation
 
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![NumPy](https://img.shields.io/badge/numpy-2.2.4-orange.svg)](https://numpy.org/)
@@ -7,24 +7,24 @@
 
 ## 1. Overview
 
-This repository provides the official implementation of **HD3C**, an efficient 
-classification framework designed for embedded devices. The HD3C paper is availale 
+This repository provides the official implementation of **HDC-X**, an efficient 
+classification framework designed for embedded devices. The HDC-X paper is availale 
 [here](https://arxiv.org/abs/2509.14617).
 
-When applied to heart sound classification, HD3C achieves accuracy comparable to 
+When applied to heart sound classification, HDC-X achieves accuracy comparable to 
 SOTA deep neural networks while being 350× more energy-efficient. It is 
 especially effective at handling high data variability and improves accuracy by 
-more than 10% compared to traditional one-shot methods. HD3C delivers 
+more than 10% compared to traditional one-shot methods. HDC-X delivers 
 real-time inference without GPU acceleration, making it ideal for 
 energy-constrained and latency-sensitive applications.
 
 ![Teaser](media/teaser.svg)
 
-HD3C encodes continuous feature vectors s ∈ ℝᵈ into high-dimensional binary 
+HDC-X encodes continuous feature vectors s ∈ ℝᵈ into high-dimensional binary 
 hypervectors S ∈ { -1, +1 }ᴰ where d << D. Classification is performed using 
 hyperspace clustering and Hamming distance-based similarity measurement.
 
-![HD3C Overview](media/pipeline.svg)
+![HDC-X Overview](media/pipeline.svg)
 
 > **Status**: This work is currently under review as a conference paper.
 
@@ -37,17 +37,17 @@ Follow these steps to set up the environment and install dependencies:
 Run the following command to create a new conda environment:
 
 ```bash
-conda create -n hd3c python=3.10
-conda activate hd3c
+conda create -n hdcx python=3.10
+conda activate hdcx
 ```
 
 ### Step 2: Clone the Repository
 
-Clone the official HD3C GitHub repository:
+Clone the official HDC-X GitHub repository:
 
 ```bash
-git clone https://github.com/jianglanwei/hd3c
-cd hd3c
+git clone https://github.com/jianglanwei/hdc-x
+cd hdc-x
 ```
 
 ### Step 3: Install Required Packages
@@ -58,7 +58,7 @@ Install the required Python packages using the provided `requirements.txt` file:
 pip install -r requirements.txt
 ```
 
-## 3. Run HD3C on PhysioNet 2016
+## 3. Run HDC-X on PhysioNet 2016
 
 We recommend starting with the [PhysioNet 2016 Challenge](https://physionet.org/content/challenge-2016/),
  which provides 3,240 heart sound recordings labeled as either normal or abnormal. 
@@ -70,7 +70,7 @@ Each recording has been converted into a 720-dimensional feature vector using
 MFCC and DWT-based frequency-domain analysis. Feature extraction was done using 
 [Yaseen's implementation](https://github.com/yaseen21khan/Classification-of-Heart-Sound-Signal-Using-Multiple-Features-).
 
-To run HD3C on PhysioNet 2016 (both training and evaluation), use the following 
+To run HDC-X on PhysioNet 2016 (both training and evaluation), use the following 
 command:
 
 ```bash
@@ -81,7 +81,7 @@ python main.py --task PhysioNet2016
 slight variations between runs. For reliable evaluation, we recommend running the
 experiment multiple times and reporting the average.
 
-### Performance of HD3C and Baseline Models on PhysioNet 2016
+### Performance of HDC-X and Baseline Models on PhysioNet 2016
 
 <div style="overflow-x: auto; min-width: 600px">
 
@@ -97,24 +97,25 @@ experiment multiple times and reporting the average.
 | **One-Shot Models:** 
 | K-Means                                | 76.759 ± 4.937            | very low               | very low                       |
 | HDC                                    | 77.840 ± 2.419            | 0.135 ± 0.010          | 2.6 ± 0.4                      |
-| **HD3C (Ours)**                        | **88.180 ± 1.746**        | **0.246 ± 0.006**      | **2.7 ± 0.3**                  |
+| **HDC-X (Ours)**                        | **88.180 ± 1.746**        | **0.246 ± 0.006**      | **2.7 ± 0.3**                  |
 
 </div>
 
-HD3C achieves up to 580× energy efficiency in training and 350× in inference 
+HDC-X achieves up to 580× energy efficiency in training and 350× in inference 
 compared to the state-of-the-art Bayesian ResNet. It also improves accuracy by 
 more than 10% over traditional HDC approaches, making it highly suitable for 
 resource-constrained applications in home and field healthcare. We are currently 
-developing hardware tailored for HD3C to further enhance its energy efficiency.
+developing hardware tailored for HDC-X to further enhance its energy efficiency.
 
- > **Tip:** You can reduce HD3C to a traditional hyperdimensional computing (HDC) 
- pipeline by setting `num_clusters_per_class: 1` and `num_clustering_iters: 0` 
- in `config/PhysioNet2016.yaml`. This disables class-wise clustering. Try both 
- configurations to observe the impact of clustering on performance.
+ > **Tip:** You can reduce HDC-X to a standard hyperdimensional computing (HDC) 
+ pipeline by setting `num_clusters_per_class: 1`, `num_clustering_iters: 0` 
+ (disables hyperspace clustering) and `num_retrain_epochs: 1` (disables retraining) 
+ in `config/PhysioNet2016.yaml`. Try both configurations to observe the impact of 
+ clustering and retraining on performance.
 
 ## 4. Add a Custom Classification Task
 
-To apply HD3C to a new dataset, follow these steps:
+To apply HDC-X to a new dataset, follow these steps:
 
 ### Step 1: Create a Configuration File
 
@@ -130,8 +131,8 @@ You may also adjust additional hyperparameters for your dataset:
 intra-class variability.
 - Ensure `num_clustering_iters` is at least as large as `num_clusters_per_class` 
 to allow clustering to converge.
-- To simplify HD3C into a traditional HDC pipeline, see the **Tip** under the 
-[Results](#performance-of-hd3c-and-baseline-models-on-physionet-2016).
+- To simplify HDC-X into a traditional HDC pipeline, see the **Tip** under the 
+[Results](#performance-of-hdc-x-and-baseline-models-on-physionet-2016).
 
 ### Step 2: Add Dataset Folder and Reader
 
@@ -151,7 +152,7 @@ specified in your YAML configuration file. We recommend clipping the top and
 bottom 2% of each feature dimension to minimize the influence of outliers. Class 
 labels must be integers in the range `{0, 1, ..., num_classes - 1}`.
 
-### Step 3: Run HD3C
+### Step 3: Run HDC-X
 
 Once the configuration and dataset are ready, run the following command:
 
@@ -159,7 +160,7 @@ Once the configuration and dataset are ready, run the following command:
 python main.py --task {task_name}
 ```
 
-This will train and evaluate HD3C on your custom dataset.
+This will train and evaluate HDC-X on your custom dataset.
 
 ## 5. License
 
